@@ -19,18 +19,18 @@ class calcString:
         if (calcString.convertInput(self) == [1]): succesfulTests+=1; print("Test \"1\" succesful")
 
         tests+=1
-        self.stringToConvert="1,2"
-        if (calcString.convertInput(self) == [1,2]): succesfulTests+=1; print("Test \"1,2\" succesful")
+        self.stringToConvert="1\n2"
+        if (calcString.convertInput(self) == [1,2]): succesfulTests+=1; print("Test \"1\n2\" succesful")
 
         tests+=1
-        self.stringToConvert="1,,2"
-        if (calcString.convertInput(self) == [1,0,2]): succesfulTests+=1; print("Test \"1,,2\" succesful")
+        self.stringToConvert="1\n\n2"
+        if (calcString.convertInput(self) == [1,0,2]): succesfulTests+=1; print("Test \"1\n\n2\" succesful")
 
         if (tests==succesfulTests) : print("ALL CALCSTRING TESTS SUCCESFUL!")
         return;
 
     def convertInput(self):
-        self.output=self.stringToConvert.split(',')     #Splits input string into list of strings delimited by a comma
+        self.output=self.stringToConvert.split('\n')     #Splits input string into list of strings delimited by a comma
         for index in range(len(self.output)):
             if (self.output[index] == ''): self.output[index]='0'    #If there is an emlty string in the list, it gets converted to 0
 

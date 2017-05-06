@@ -5,6 +5,7 @@
 #  4. Remember to refactor after each passing test
 #
 #  Allow the add​ function to handle an unknown amount of numbers
+#  Allow the add​ function to handle new lines between numbers (instead of commas).
 
 from calcString import calcString
 
@@ -19,16 +20,16 @@ def testSuite():
     if (test("one number",1,"1") == "Success") : succesfulTests+=1
 
     tests+=1
-    if (test("two numbers",7,"3,4") == "Success") : succesfulTests+=1
+    if (test("two numbers",7,"3\n4") == "Success") : succesfulTests+=1
 
     tests+=1
-    if (test("double digits",31,"16,15") == "Success") : succesfulTests+=1
+    if (test("double digits",31,"16\n15") == "Success") : succesfulTests+=1
 
     tests+=1
-    if (test("three numbers",6,"1,2,3") == "Success") : succesfulTests+=1
+    if (test("three numbers",6,"1\n2\n3") == "Success") : succesfulTests+=1
 
     tests+=1
-    if (test("multiple numbers",2165,"41,25,33,156,1,1888,,12,4,5") == "Success") : succesfulTests+=1
+    if (test("multiple numbers",2165,"41\n25\n33\n156\n1\n1888\n\n12\n4\n5") == "Success") : succesfulTests+=1
         
     if (tests==succesfulTests) : print("ALL CALCULATOR TESTS SUCCESFUL!")
     return;
