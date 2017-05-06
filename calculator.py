@@ -3,41 +3,53 @@
 #  2. Start with the simplest test case of an empty string and move to 1 and two numbers
 #  3. Remember to solve things as simply as possible so that you force yourself to write tests you did not think about
 #  4. Remember to refactor after each passing test
+#
+#  Allow the add​ function to handle an unknown amount of numbers
+
+from calcString import calcString
 
 def testSuite():
     succesfulTests=0
-    tests=1
-    
-    if (add() == 0) :
-        print("Test with zero numbers successful")
-        succesfulTests=+1
-    else:
-        print("Test with zero numbers failed!")
+    tests=0
 
-    tests=+1
-    if (add(1) == 1) :
-        print("Test with one number successful")
-        succesfulTests=+1
-    else:
-        print("Test with one number failed!")
+    tests+=1
+    if (test("zero numbers",0,"") == "Success") : succesfulTests+=1
 
-    test("two numbers",1,3,4)
-    test("double digits",15,16,31)
-    
-    if (tests==succesfulTests) : print("ALL TESTS SUCCESFUL!")
+    tests+=1
+    if (test("one number",1,"1") == "Success") : succesfulTests+=1
+
+    tests+=1
+    if (test("two numbers",7,"3,4") == "Success") : succesfulTests+=1
+
+    tests+=1
+    if (test("double digits",31,"16,15") == "Success") : succesfulTests+=1
+
+    tests+=1
+    if (test("three numbers",6,"1,2,3") == "Success") : succesfulTests+=1
+
+    tests+=1
+    if (test("multiple numbers",2165,"41,25,33,156,1,1888,,12,4,5") == "Success") : succesfulTests+=1
+        
+    if (tests==succesfulTests) : print("ALL CALCULATOR TESTS SUCCESFUL!")
     return;
 
-def test(description,num1=0,num2=0,output=0):
-    tests=+1
-    if (add(num1,num2) == output) :
+def test(description,output,str):
+    if (add(str) == output) :
         print("Test with "+description+" successful")
-        succesfulTests=+1
+        return("Success")
     else:
         print("Test with "+description+" failed!")
-    return;
+        return("Fail")
+    
 
-def add(num1=0,num2=0):
-    output=num1+num2
+def add(str):
+    testString=calcString(str)          
+    result=testString.convertInput()    #Converts input to 
+    output = 0
+    for index in range(len(result)):
+      output=output+int(result[index])
     return output;
 
 testSuite()
+test = calcString("test")
+test.testSuite()
