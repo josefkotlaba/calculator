@@ -5,15 +5,39 @@
 #  4. Remember to refactor after each passing test
 
 def testSuite():
-    if (add("") == "") : print("Test add() successful") #Test with zero numbers
+    succesfulTests=0
+    tests=1
+    
+    if (add() == 0) :
+        print("Test with zero numbers successful")
+        succesfulTests=+1
+    else:
+        print("Test with zero numbers failed!")
+
+    tests=+1
+    if (add(1) == 1) :
+        print("Test with one number successful")
+        succesfulTests=+1
+    else:
+        print("Test with one number failed!")
+
+    test("two numbers",1,3,4)
+    test("double digits",15,16,31)
+    
+    if (tests==succesfulTests) : print("ALL TESTS SUCCESFUL!")
     return;
-  
 
-def add(str):
-    input = str
+def test(description,num1=0,num2=0,output=0):
+    tests=+1
+    if (add(num1,num2) == output) :
+        print("Test with "+description+" successful")
+        succesfulTests=+1
+    else:
+        print("Test with "+description+" failed!")
+    return;
 
-    output=input
-    print(output)
+def add(num1=0,num2=0):
+    output=num1+num2
     return output;
 
 testSuite()
