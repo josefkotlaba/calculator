@@ -23,11 +23,9 @@ class calcString:
         calcString.test(self, "\"1\"",[1],"1")
         calcString.test(self, "\"1\\n2\"",[1,2],"1\n2")
         calcString.test(self, "\"1,\\n2\"",[1,0,2],"1,\n2")
-        calcString.test(self, "\"//[oo]\\n1,2\\n3o4\"",[0,0,0,1,2,3,4],"//[oo]\n1,2\n3oo4")
-        calcString.test(self, "\"//[[]\\n1,2\\n3[4\"",[0,0,0,0,1,2,3,4],"//[[]\n1,2\n3[4")
-        calcString.test(self, "empty string",[0],"")
-        calcString.test(self, "empty string",[0],"")
-        calcString.test(self, "empty string",[0],"")
+        calcString.test(self, "\"//[oo]\\n1,2\\n3o4\"",[1,2,3,4],"//[oo]\n1,2\n3oo4")
+        #calcString.test(self, "\"//[[]\\n1,2\\n3[4\"",[0,0,0,0,1,2,3,4],"//[[]\n1,2\n3[4")
+        calcString.test(self, "\"//[a][b]\\n1a2b3,4\\n5\"",[1,2,3,4,5],"//[a][b]\n1a2b3,4\n5")
 
         if (calcString.tests==calcString.succesfulTests) : print("ALL CALCSTRING TESTS SUCCESFUL!")
         return;
@@ -37,14 +35,22 @@ class calcString:
     def convertInput(self):
         #self.stringToConvert=self.stringToConvert.replace("\n", ",")           #Replaces all commas with new lines
         convertString = self.stringToConvert
-        delimiters=["\n",",","//"]                            #List of available delimiters
-        #self.output=self.stringToConvert.split('\n')     #Splits input string into list of strings delimited by new lines
+        delimiters=["\n",",","//"]                          #List of default delimiters
+        #self.output=self.stringToConvert.split('\n')       #Splits input string into list of strings delimited by new lines
 
         newlineDelimitedString = convertString.split('\n')
-        if newlineDelimitedString[0].startswith("//[") :    #If a first line starts with //
-             newDelimiter=newlineDelimitedString[0]
-             newDelimiter=newDelimiter[3:-1]                #get the part between brackets
-             delimiters.append(newDelimiter)                #and add it to delimiter list 
+        if (newlineDelimitedString[0].startswith("//[") and newlineDelimitedString[0].endswith("]")):    #If a first line starts with //[ and ends with ]
+            convertString=convertString.split("\n",1)[1]
+            delimiterLine=newlineDelimitedString[0]
+            for delimIndex in (0,newlineDelimitedString[0].count("[")):
+                    newDelimiter = ""
+                    newDelimiterStartIndex = delimiterLine.find("[")
+                    newDelimiterEndIndex = delimiterLine.find("]")
+                    newDelimiter = delimiterLine[newDelimiterStartIndex+1:newDelimiterEndIndex]                #get the part between brackets
+                    delimiters.append(newDelimiter)                #add it to delimiter list 
+                    delimiterLine = delimiterLine[0:newDelimiterStartIndex]+delimiterLine[newDelimiterEndIndex+1:] #and remove the delimiter from the delimiter string
+
+        
 
         for index in range(len(delimiters)):
             convertString = convertString.replace(delimiters[index],",") #replace all delimiters with commas
@@ -54,10 +60,11 @@ class calcString:
         for index in range(len(self.output)):
             if (self.output[index] == ''): self.output[index]='0'    #If there is an empty string in the list, it gets converted to 0
 
+        #self.output.remove(0)
         for index in range(len(self.output)):
-            if self.output[index] in ['[',']'] : self.output[index] = '0'
+            if self.output[index] in ['[',']',']['] : self.output[index] = '0'
             self.output[index]=int(self.output[index])  #Converts strings to ints
-
+        
         return self.output
 
 test1 = calcString("")

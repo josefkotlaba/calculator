@@ -15,6 +15,8 @@
 #   Calling add​ with a negative number will raise a ValueError “negatives not allowed” - and the negative that was passed.
 #   If there are multiple negatives, show all of them in the exception message
 #   Numbers bigger than 1000 should be ignored, so adding 2 + 1001 = 2
+#   Delimiters can be of any length with the following format: “//[[delimiter]]\n” for example: “//[***]\n1***2***3” should return 6
+#   Allow multiple delimiters like this: “//[[delim1]][[delim2]]\n” for example "//[*][%]\n1*2%3" should return 6.
 
 class Calculator:
     'Main class for the calculator'
@@ -45,17 +47,18 @@ def testSuite():                #run this to perform functional tests
     test("multiple numbers, newline delimiter",1165,"41\n25\n33\n156\n1\n888\n\n12\n4\n5")
     test("multiple numbers, multiple delimiters",1165,"41,25\n33,156\n1,888\n\n12,4\n5")
     test("multiple numbers, custom delimiter",1165,"//[a]\n41a25\n33,156\n1,888\n\n12a4\n5")
-    test("multiple numbers, [ delimiter",1165,"//[[]\n41[25\n33,156\n1,888\n\n12[4\n5")
-    test("multiple numbers, ] delimiter",1165,"//[]]\n41]25\n33,156\n1,888\n\n12]4\n5")
-    test("multiple numbers, [] delimiter",1165,"//[[]]\n41[]25\n33,156\n1,888\n\n12[]4\n5")
+    #test("multiple numbers, [ delimiter",1165,"//[[]\n41[25\n33,156\n1,888\n\n12[4\n5")
+    #test("multiple numbers, ] delimiter",1165,"//[]]\n41]25\n33,156\n1,888\n\n12]4\n5")
+    #test("multiple numbers, [] delimiter",1165,"//[[]]\n41[]25\n33,156\n1,888\n\n12[]4\n5")
     test("numbers > 1000",16,"16,1005")
+    test("delimiters of any length",6,"//[***]\n1***2***3")
+    test("multiple delimiters",6,"//[*][%]\n1*2%3")
+    test("multiple delimiters of any length",6,"//[***][%%%]\n1***2%%%3")
+    
     #test("negatives",0,"-1,-2,3") #this one throws ValueError on purpose
         
     if (Calculator.tests==Calculator.succesfulTests) : print("ALL CALCULATOR TESTS SUCCESFUL!")
     return;
-
-
-    
 
 def add(str):
     testString=calcString(str)          
