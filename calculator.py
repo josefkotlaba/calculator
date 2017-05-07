@@ -14,6 +14,7 @@
 #    - the first line is optional. all existing scenarios should still be supported
 #   Calling add​ with a negative number will raise a ValueError “negatives not allowed” - and the negative that was passed.
 #   If there are multiple negatives, show all of them in the exception message
+#   Numbers bigger than 1000 should be ignored, so adding 2 + 1001 = 2
 
 class Calculator:
     'Main class for the calculator'
@@ -40,13 +41,14 @@ def testSuite():                #run this to perform functional tests
     test("double digits",31,"16,15")
     test("three numbers",6,"1\n2\n3")
     test("three numbers",6,"1\n2,3")
-    test("multiple numbers",2165,"41,25,33,156,1,1888,,12,4,5")
-    test("multiple numbers, newline delimiter",2165,"41\n25\n33\n156\n1\n1888\n\n12\n4\n5")
-    test("multiple numbers, multiple delimiters",2165,"41,25\n33,156\n1,1888\n\n12,4\n5")
-    test("multiple numbers, custom delimiter",2165,"//[a]\n41a25\n33,156\n1,1888\n\n12a4\n5")
-    test("multiple numbers, [ delimiter",2165,"//[[]\n41[25\n33,156\n1,1888\n\n12[4\n5")
-    test("multiple numbers, ] delimiter",2165,"//[]]\n41]25\n33,156\n1,1888\n\n12]4\n5")
-    test("multiple numbers, [] delimiter",2165,"//[[]]\n41[]25\n33,156\n1,1888\n\n12[]4\n5")
+    test("multiple numbers",1165,"41,25,33,156,1,888,,12,4,5")
+    test("multiple numbers, newline delimiter",1165,"41\n25\n33\n156\n1\n888\n\n12\n4\n5")
+    test("multiple numbers, multiple delimiters",1165,"41,25\n33,156\n1,888\n\n12,4\n5")
+    test("multiple numbers, custom delimiter",1165,"//[a]\n41a25\n33,156\n1,888\n\n12a4\n5")
+    test("multiple numbers, [ delimiter",1165,"//[[]\n41[25\n33,156\n1,888\n\n12[4\n5")
+    test("multiple numbers, ] delimiter",1165,"//[]]\n41]25\n33,156\n1,888\n\n12]4\n5")
+    test("multiple numbers, [] delimiter",1165,"//[[]]\n41[]25\n33,156\n1,888\n\n12[]4\n5")
+    test("numbers > 1000",16,"16,1005")
     #test("negatives",0,"-1,-2,3") #this one throws ValueError on purpose
         
     if (Calculator.tests==Calculator.succesfulTests) : print("ALL CALCULATOR TESTS SUCCESFUL!")
@@ -60,7 +62,8 @@ def add(str):
     intList=testString.convertInput()    #Converts input to list of ints
     output = 0
     for index in range(len(intList)):
-      output=output+int(intList[index])  #Adds the ints
+        if (intList[index]>1000) : intList[index]=0     #numbers bigger than 1000 get ignored
+        output=output+int(intList[index])  #Adds the ints
     getNegatives(intList)
     
     return output;
