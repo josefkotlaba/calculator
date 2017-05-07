@@ -12,6 +12,9 @@
 #      “//[[delimiter]]\n[numbers...]”
 #       for example “//[;]\n1;2” should return three where the default delimiter is ‘;’ .
 #    - the first line is optional. all existing scenarios should still be supported
+#   Calling add​ with a negative number will raise a ValueError “negatives not allowed” - and the negative that was passed.
+#   If there are multiple negatives, show all of them in the exception message
+
 class Calculator:
     'Main class for the calculator'
     succesfulTests=0
@@ -44,6 +47,7 @@ def testSuite():                #run this to perform functional tests
     test("multiple numbers, [ delimiter",2165,"//[[]\n41[25\n33,156\n1,1888\n\n12[4\n5")
     test("multiple numbers, ] delimiter",2165,"//[]]\n41]25\n33,156\n1,1888\n\n12]4\n5")
     test("multiple numbers, [] delimiter",2165,"//[[]]\n41[]25\n33,156\n1,1888\n\n12[]4\n5")
+    #test("negatives",0,"-1,-2,3") #this one throws ValueError on purpose
         
     if (Calculator.tests==Calculator.succesfulTests) : print("ALL CALCULATOR TESTS SUCCESFUL!")
     return;
@@ -53,11 +57,22 @@ def testSuite():                #run this to perform functional tests
 
 def add(str):
     testString=calcString(str)          
-    result=testString.convertInput()    #Converts input to list of ints
+    intList=testString.convertInput()    #Converts input to list of ints
     output = 0
-    for index in range(len(result)):
-      output=output+int(result[index])  #Adds the ints
+    for index in range(len(intList)):
+      output=output+int(intList[index])  #Adds the ints
+    getNegatives(intList)
+    
     return output;
+
+def getNegatives(numList):
+    negatives = []
+    for index in range(len(numList)):
+        if numList[index] < 0 : negatives.append(numList[index])
+    if (negatives == []):
+        return negatives
+    else:
+        raise ValueError("Negatives not allowed: ",negatives)
 
 testSuite()
 test = calcString("test")
