@@ -47,8 +47,8 @@ def testSuite():                #run this to perform functional tests
     test("multiple numbers, newline delimiter",1165,"41\n25\n33\n156\n1\n888\n\n12\n4\n5")
     test("multiple numbers, multiple delimiters",1165,"41,25\n33,156\n1,888\n\n12,4\n5")
     test("multiple numbers, custom delimiter",1165,"//[a]\n41a25\n33,156\n1,888\n\n12a4\n5")
-    #test("multiple numbers, [ delimiter",1165,"//[[]\n41[25\n33,156\n1,888\n\n12[4\n5")
-    #test("multiple numbers, ] delimiter",1165,"//[]]\n41]25\n33,156\n1,888\n\n12]4\n5")
+    #test("multiple numbers, [ delimiter",1165,"//[[]\n41[25\n33,156\n1,888\n\n12[4\n5")    
+    #test("multiple numbers, ] delimiter",1165,"//[]]\n41]25\n33,156\n1,888\n\n12]4\n5")        #Square brackets as a delimiter will break the current implementation
     #test("multiple numbers, [] delimiter",1165,"//[[]]\n41[]25\n33,156\n1,888\n\n12[]4\n5")
     test("numbers > 1000",16,"16,1005")
     test("delimiters of any length",6,"//[***]\n1***2***3")
@@ -81,5 +81,3 @@ def getNegatives(numList):
         raise ValueError("Negatives not allowed: ",negatives)
 
 testSuite()
-test = calcString("test")
-test.testSuite()

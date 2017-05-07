@@ -32,25 +32,22 @@ class calcString:
 
 
 
-    def convertInput(self):
-        #self.stringToConvert=self.stringToConvert.replace("\n", ",")           #Replaces all commas with new lines
+    def convertInput(self):        
         convertString = self.stringToConvert
-        delimiters=["\n",",","//"]                          #List of default delimiters
-        #self.output=self.stringToConvert.split('\n')       #Splits input string into list of strings delimited by new lines
+        delimiters=["," , "\n"]                               #List of default delimiters
+        #newlineDelimitedString = convertString.split('\n')
+        if (convertString.split('\n')[0].startswith("//[") and convertString.split('\n')[0].endswith("]")):    #If a first line starts with //[ and ends with ]
 
-        newlineDelimitedString = convertString.split('\n')
-        if (newlineDelimitedString[0].startswith("//[") and newlineDelimitedString[0].endswith("]")):    #If a first line starts with //[ and ends with ]
-            convertString=convertString.split("\n",1)[1]
-            delimiterLine=newlineDelimitedString[0]
-            for delimIndex in (0,newlineDelimitedString[0].count("[")):
+            delimiterLine=convertString.split('\n')[0]      #First line with the delimiters
+            convertString=convertString.split("\n",1)[1]    #Rest of the string
+            
+            for delimIndex in (0,delimiterLine.count("[")):
                     newDelimiter = ""
                     newDelimiterStartIndex = delimiterLine.find("[")
                     newDelimiterEndIndex = delimiterLine.find("]")
-                    newDelimiter = delimiterLine[newDelimiterStartIndex+1:newDelimiterEndIndex]                #get the part between brackets
-                    delimiters.append(newDelimiter)                #add it to delimiter list 
-                    delimiterLine = delimiterLine[0:newDelimiterStartIndex]+delimiterLine[newDelimiterEndIndex+1:] #and remove the delimiter from the delimiter string
-
-        
+                    newDelimiter = delimiterLine[newDelimiterStartIndex+1:newDelimiterEndIndex]                     #Get the part between brackets
+                    delimiters.append(newDelimiter)                                                                 #add it to delimiter list 
+                    delimiterLine = delimiterLine[0:newDelimiterStartIndex]+delimiterLine[newDelimiterEndIndex+1:]  #and remove it from the delimiter string.
 
         for index in range(len(delimiters)):
             convertString = convertString.replace(delimiters[index],",") #replace all delimiters with commas
@@ -59,10 +56,6 @@ class calcString:
         
         for index in range(len(self.output)):
             if (self.output[index] == ''): self.output[index]='0'    #If there is an empty string in the list, it gets converted to 0
-
-        #self.output.remove(0)
-        for index in range(len(self.output)):
-            if self.output[index] in ['[',']',']['] : self.output[index] = '0'
             self.output[index]=int(self.output[index])  #Converts strings to ints
         
         return self.output
